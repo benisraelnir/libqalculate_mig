@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qalculate"
+version = "5.9.0"
+description = "Python port of libqalculate - arbitrary precision calculator library and CLI"
+requires-python = ">=3.10"
+license = {text = "GPL-2.0-or-later"}
+dependencies = [
+    "mpmath>=1.3",
+    "sympy>=1.13",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[project.scripts]
+qalc = "qalculate.cli.qalc:main"
+
+[tool.setuptools.packages.find]
+include = ["qalculate*"]
+
+[tool.setuptools.package-data]
+"qalculate" = ["data/*.xml"]
+
+[tool.pytest.ini_options]
+testpaths = ["../tests"]
