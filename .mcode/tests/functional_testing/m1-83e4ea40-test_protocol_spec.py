@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-06T22:01:44.324010+00:00
+Generated at: 2026-03-06T22:11:39.676477+00:00
 Project: libqalculate-mig
 Milestone: 1
 """
@@ -452,12 +452,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_color_option_with_value",
         "category": "HAPPY_PATH",
-        "description": "Verify --color with explicit value is accepted",
+        "description": "Verify --color with explicit value is accepted (value must be inline, e.g. -c2)",
         "command": "qalc",
         "subcommand": "",
         "args": [
-            "--color",
-            "2",
+            "-c2",
             "-v"
         ],
         "expected_exit_code": 0,
@@ -536,10 +535,10 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [
             "-t",
             "--",
-            "-v"
+            "2+2"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": null,
+        "expected_stdout": "4",
         "expected_stderr": null,
         "timeout_seconds": 15
     },
@@ -764,7 +763,6 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "subcommand": "",
         "args": [
             "-t",
-            "-n",
             "1+1"
         ],
         "expected_exit_code": 0,
@@ -780,7 +778,6 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "subcommand": "",
         "args": [
             "-t",
-            "-n",
             "--",
             "-5+3"
         ],
@@ -857,7 +854,6 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "subcommand": "",
         "args": [
             "-t",
-            "-n",
             "--",
             ""
         ],
@@ -874,7 +870,6 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "subcommand": "",
         "args": [
             "-t",
-            "-n",
             "1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1"
         ],
         "expected_exit_code": 0,
@@ -949,12 +944,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_boundary_color_zero",
         "category": "BOUNDARY",
-        "description": "Setting color to 0 should disable color output",
+        "description": "Setting color to 0 should disable color output (value must be inline, e.g. -c0)",
         "command": "qalc",
         "subcommand": "",
         "args": [
-            "-c",
-            "0",
+            "-c0",
             "-v"
         ],
         "expected_exit_code": 0,
