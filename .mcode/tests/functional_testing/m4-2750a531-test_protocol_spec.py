@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-06T22:40:18.529912+00:00
+Generated at: 2026-03-06T22:49:47.450165+00:00
 Project: libqalculate-mig
 Milestone: 4
 """
@@ -75,7 +75,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "--version"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "1.0.0",
+        "expected_stdout": "5.9.0",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -88,9 +88,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [
             "--unknown-flag"
         ],
-        "expected_exit_code": 2,
-        "expected_stdout": null,
-        "expected_stderr": "Unrecognized option",
+        "expected_exit_code": 1,
+        "expected_stdout": "error",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
@@ -102,9 +102,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [
             "--set"
         ],
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "No option and value specified",
+        "expected_exit_code": 0,
+        "expected_stdout": "No option and value specified",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
@@ -116,9 +116,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [
             "--file"
         ],
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "No file specified",
+        "expected_exit_code": 0,
+        "expected_stdout": "No file specified",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
@@ -147,7 +147,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "diff(sinh(x^2)/(5x) + 3xy/sqrt(x))"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "0.4 * cosh(x^2) + (3y) / (2 * sqrt(x)) - sinh(x^2) / (5x^2)",
+        "expected_stdout": "0.4 \u00d7 cosh(x\u00b2) + (3y) / (2 \u00d7 \u221a(x)) \u2212 sinh(x\u00b2) / (5x\u00b2)",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -162,7 +162,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "integrate(6x^2)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "2x^3 + C",
+        "expected_stdout": "2x\u00b3 + C",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -192,7 +192,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "integrate(sinh(x^2)/(5x) + 3xy/sqrt(x))"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "2x * sqrt(x) * y + 0.1 * Shi(x^2) + C",
+        "expected_stdout": "2x \u00d7 \u221a(x) \u00d7 y + 0.1 \u00d7 Shi(x\u00b2) + C",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -282,7 +282,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "betainc(5i - 2, 32, 3.2)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-9.431063439E27 - 5.083225623E27i",
+        "expected_stdout": "\u22129.431063439E27 \u2212 5.083225623E27i",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -301,7 +301,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "x + 3 = 0"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = -3",
+        "expected_stdout": "x = \u22123",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -320,7 +320,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "-x^2 + 3x = 1"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = (sqrt(5) + 3) / 2 or x = 3/2 - sqrt(5) / 2",
+        "expected_stdout": "x = (\u221a(5) + 3) / 2 or x = 3/2 \u2212 \u221a(5) / 2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -339,7 +339,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "x^3-5x^2-4x+20=0"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 5 or x = 2 or x = -2",
+        "expected_stdout": "x = 5 or x = 2 or x = \u22122",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -358,7 +358,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "2x^3 + 5x -5x^2 + 21 = 9x + x^3 + 1"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 5 or x = 2 or x = -2",
+        "expected_stdout": "x = 5 or x = 2 or x = \u22122",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -377,7 +377,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "x*(2x^2 + 5 -5x) + 21 = 9x + x^3 +1"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 5 or x = 2 or x = -2",
+        "expected_stdout": "x = 5 or x = 2 or x = \u22122",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -415,7 +415,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "x^3 + x^2 + x = 5"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 2 / (3 * cbrt(3 * sqrt(561) - 71)) - 1/3 - cbrt(3 * sqrt(561) - 71) / 3",
+        "expected_stdout": "x = 2 / (3 \u00d7 cbrt(3 \u00d7 \u221a(561) \u2212 71)) \u2212 1/3 \u2212 cbrt(3 \u00d7 \u221a(561) \u2212 71) / 3",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -434,7 +434,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "x^4 + 20x^3 + 150x^2 + 500x + 625 = 0"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = -5",
+        "expected_stdout": "x = \u22125",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -453,7 +453,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "x^(1/3) + x^(2/3) = 3"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 2 * sqrt(13) - 5",
+        "expected_stdout": "x = 2 \u00d7 \u221a(13) \u2212 5",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -472,7 +472,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "ln(x) + x = 3"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = lambertw(e^3)",
+        "expected_stdout": "x = lambertw(e\u00b3)",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -491,7 +491,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "2^(3x) + 4x = 5"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 5/4 - lambertw(6 * 8^(1/4) * ln(2)) / (3 * ln(2))",
+        "expected_stdout": "x = 5/4 \u2212 lambertw(6 \u00d7 8^(1/4) \u00d7 ln(2)) / (3 \u00d7 ln(2))",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -510,7 +510,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "x^(-3x) = 2"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = e^lambertw(-ln(2) / 3) or x = e^lambertw(-ln(2) / 3, -1)",
+        "expected_stdout": "x = e^lambertw(\u2212ln(2) / 3) or x = e^lambertw(\u2212ln(2) / 3, \u22121)",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -529,7 +529,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "1/3 * sin(3x) - 1/3 = 0"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = (2/3) * pi * n + pi / 6",
+        "expected_stdout": "x = (2/3) \u00d7 \u03c0n + \u03c0 / 6",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -548,7 +548,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "2/3 * sin(3x) - 1/3 = 0"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = (2/3) * pi * n + (5/18) * pi or x = (2/3) * pi * n + pi / 18",
+        "expected_stdout": "x = (2/3) \u00d7 \u03c0n + (5/18) \u00d7 \u03c0 or x = (2/3) \u00d7 \u03c0n + \u03c0 / 18",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -567,7 +567,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "sin(x) + cos(x) = 1"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 2 pi * n or x = 2 pi * n + pi / 2",
+        "expected_stdout": "x = 2\u03c0n or x = 2\u03c0n + \u03c0 / 2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -586,7 +586,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "sin(x) = 1 + cos(x)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 2 pi * n + pi or x = 2 pi * n + pi / 2",
+        "expected_stdout": "x = 2\u03c0n + \u03c0 or x = 2\u03c0n + \u03c0 / 2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -605,7 +605,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "sqrt(2) * cos(3x + pi/6) = 1"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = (2/3) * pi * n + pi / 36 or x = (2/3) * pi * n - (5/36) * pi",
+        "expected_stdout": "x = (2/3) \u00d7 \u03c0n + \u03c0 / 36 or x = (2/3) \u00d7 \u03c0n \u2212 (5/36) \u00d7 \u03c0",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -624,7 +624,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "2 * sin(3x/4) = 1"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = (8/3) * pi * n + (10/9) * pi or x = (8/3) * pi * n + (2/9) * pi",
+        "expected_stdout": "x = (8/3) \u00d7 \u03c0n + (10/9) \u00d7 \u03c0 or x = (8/3) \u00d7 \u03c0n + (2/9) \u00d7 \u03c0",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -643,7 +643,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "tan(x/4 + pi/3) = sqrt(3)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 4 pi * n",
+        "expected_stdout": "x = 4\u03c0n",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -662,7 +662,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "sin(x)^2 = sin(x)^3"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = pi * n or x = 2 pi * n + pi / 2",
+        "expected_stdout": "x = \u03c0n or x = 2\u03c0n + \u03c0 / 2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -681,7 +681,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "sin(x) = sin(x/2)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = 2 pi * n or x = 4 pi * n + (2/3) * pi or x = 4 pi * n - (2/3) * pi",
+        "expected_stdout": "x = 2\u03c0n or x = 4\u03c0n + (2/3) \u00d7 \u03c0 or x = 4\u03c0n \u2212 (2/3) \u00d7 \u03c0",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -700,7 +700,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "sin(4x) + cos(2x) = 0"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "x = pi * n + (7/12) * pi or x = pi * n - pi / 12 or x = (pi * n) / 2 - pi / 4",
+        "expected_stdout": "x = \u03c0n + (7/12) \u00d7 \u03c0 or x = \u03c0n \u2212 \u03c0 / 12 or x = (\u03c0n) / 2 \u2212 \u03c0 / 4",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -751,7 +751,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "newtonsolve(Ei(x) = 3i, 1)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-1.160849461 + 1.034283360i",
+        "expected_stdout": "\u22121.160849461 + 1.034283360i",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -884,7 +884,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "coeff(x^3-7x^2-4x-5x^2, 2)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-12",
+        "expected_stdout": "\u221212",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1036,7 +1036,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "pcontent(2x^3-3x^2-6x-8x^2, y)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "2x^3 - 11x^2 - 6x",
+        "expected_stdout": "2x\u00b3 \u2212 11x\u00b2 \u2212 6x",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1074,7 +1074,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "lcoeff(6 -5x^2 + 3x^2)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-2",
+        "expected_stdout": "\u22122",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1093,7 +1093,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "lcoeff(6 -5x^2 + 3x^2, y)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "6 - 2x^2",
+        "expected_stdout": "6 \u2212 2x\u00b2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1302,7 +1302,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "primpart(-12x^3 + 30x - 20)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "6x^3 - 15x + 10",
+        "expected_stdout": "6x\u00b3 \u2212 15x + 10",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1378,7 +1378,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "tcoeff(6x -5x^2 + 3x^2, y)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "6x - 2x^2",
+        "expected_stdout": "6x \u2212 2x\u00b2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1397,7 +1397,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "tcoeff(6 -5x^2 + 3x^2 + 2y, y)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "6 - 2x^2",
+        "expected_stdout": "6 \u2212 2x\u00b2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1416,7 +1416,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "punit(-3x)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-1",
+        "expected_stdout": "\u22121",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1435,7 +1435,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "punit(1-3x)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-1",
+        "expected_stdout": "\u22121",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1492,7 +1492,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit((x^3-4x)/(2x^2+3x),0)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-4/3",
+        "expected_stdout": "\u22124/3",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1511,7 +1511,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit(x^3/(x+1)^2,-1)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-infinity",
+        "expected_stdout": "\u2212\u221e",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1549,7 +1549,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit((x^2+2x+3)/(x-1)^2,1)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "+infinity",
+        "expected_stdout": "+\u221e",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1568,7 +1568,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit(1/(1-x)-3/(1-x^3),1)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-1",
+        "expected_stdout": "\u22121",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1663,7 +1663,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit((x(x-1)(x-2))/(x^2+6x-9),infinity)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "+infinity",
+        "expected_stdout": "+\u221e",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1815,7 +1815,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit((1+1/x)^(3x),infinity)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "e^3",
+        "expected_stdout": "e\u00b3",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1872,7 +1872,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit(((x-1)/(x+1))^x,infinity)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "1 / e^2",
+        "expected_stdout": "1 / e\u00b2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1891,7 +1891,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit((1+2x)^(1/x),0)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "e^2",
+        "expected_stdout": "e\u00b2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -1910,7 +1910,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit(((x^2+2x+2)/(x^2+3))^(x),infinity)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "e^2",
+        "expected_stdout": "e\u00b2",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2024,7 +2024,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit(x*sin(pi/x),infinity)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "pi",
+        "expected_stdout": "\u03c0",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2248,7 +2248,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "adj([1 2; 4 5])"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "[5  -2; -4  1]",
+        "expected_stdout": "[5  \u22122; \u22124  1]",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2263,7 +2263,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "adj([1, 2, 3; 4, 5, 6; 1, 0, 9])"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "[45  -18  -3; -30  6  6; -5  2  -3]",
+        "expected_stdout": "[45  \u221218  \u22123; \u221230  6  6; \u22125  2  \u22123]",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2293,7 +2293,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "cofactor([1 2 3; 4 5 6; 1 0 9], 1, 2)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-30",
+        "expected_stdout": "\u221230",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2323,7 +2323,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "det([1 2; 4 5])"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-3",
+        "expected_stdout": "\u22123",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2338,7 +2338,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "det([1 2 3; 4 5 6; 1 0 9])"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-30",
+        "expected_stdout": "\u221230",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2353,7 +2353,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "det([3 4 7 9; 5 4 -1 4; 8 7 8 5; 4 3 0 9])"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-412",
+        "expected_stdout": "\u2212412",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2413,7 +2413,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "cross((1; 2; 3); (4; 5; 6))"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "[-3  6  -3]",
+        "expected_stdout": "[\u22123  6  \u22123]",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2443,7 +2443,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "((1; 2); (3; 4))^-1"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "[-2  1; 1.5  -0.5]",
+        "expected_stdout": "[\u22122  1; 1.5  \u22120.5]",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2458,7 +2458,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "inverse([1 2; 3 5])"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "[-5  2; 3  -1]",
+        "expected_stdout": "[\u22125  2; 3  \u22121]",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2518,7 +2518,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "rref([1 3 1 9; 1 1 -1 1; 3 11 5 35])"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "[1  0  -2  -3; 0  1  1  4; 0  0  0  0]",
+        "expected_stdout": "[1  0  \u22122  \u22123; 0  1  1  4; 0  0  0  0]",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2968,7 +2968,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "sort([5, 2, 0, 1, 3, -4, 0])"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "[-4  0  0  1  2  3  5]",
+        "expected_stdout": "[\u22124  0  0  1  2  3  5]",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -2983,7 +2983,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "sort([5, 2, 0, 1, 3, -4, 0], 0)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "[5  3  2  1  0  0  -4]",
+        "expected_stdout": "[5  3  2  1  0  0  \u22124]",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -3223,7 +3223,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit(sin(x)/(x^3),0)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "+infinity",
+        "expected_stdout": "+\u221e",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -3287,7 +3287,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit((e^x-e^(-x))/(2),infinity)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "+infinity",
+        "expected_stdout": "+\u221e",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -3306,7 +3306,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit((e^x+e^(-x))/(e^x-e^(-x)),-infinity)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "-1",
+        "expected_stdout": "\u22121",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
@@ -3344,7 +3344,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
             "limit(((3x+6)/(3x-1))^(x^2),infinity)"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "+infinity",
+        "expected_stdout": "+\u221e",
         "expected_stderr": null,
         "timeout_seconds": 30
     },
