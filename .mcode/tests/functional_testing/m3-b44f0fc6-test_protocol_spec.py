@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-06T22:49:56.254618+00:00
+Generated at: 2026-03-06T22:51:28.850872+00:00
 Project: libqalculate-mig
 Milestone: 3
 """
@@ -2083,7 +2083,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "command": "qalc",
         "subcommand": "",
         "args": [
-            "-t"
+            "-t",
+            "-c",
+            "0"
         ],
         "stdin": "1000 g to kg",
         "expected_exit_code": 0,
