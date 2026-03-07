@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-06T23:36:56.866972+00:00
+Generated at: 2026-03-07T00:42:49.511326+00:00
 Project: libqalculate-mig
 Milestone: 1
 """
@@ -1267,7 +1267,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "source .venv/bin/activate && python cli/qalc.py"
+CLI_COMMAND = ".venv/bin/qalc"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
