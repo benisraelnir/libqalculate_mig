@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-07T00:42:49.511326+00:00
+Generated at: 2026-03-07T00:49:16.855163+00:00
 Project: libqalculate-mig
 Milestone: 1
 """

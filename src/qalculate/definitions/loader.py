@@ -152,18 +152,20 @@ def _should_skip_name(flags: set[str], name: str = "") -> bool:
     if "o" in flags:
         return True
 
-    # Abbreviation+suffix names with _digit patterns FOLLOWED by more text:
-    # these get subscript-converted in the SRC which hides them.
-    # But _digit at the END (like a_0) is kept and converted to subscript.
+    # Abbreviation+suffix names with _digit+type_suffix patterns:
+    # e.g., a_0unit gets converted to a₀unit which is hidden.
+    # But c_1L is kept (the 'L' after digit is just a short label, not a type suffix).
     if has_a and "s" in flags and name:
         for ci in range(len(name) - 1):
             if name[ci] == "_" and name[ci + 1].isdigit():
-                # Check if there's non-digit content after the digit(s)
                 j = ci + 1
                 while j < len(name) and name[j].isdigit():
                     j += 1
                 if j < len(name):
-                    return True  # _digit followed by more text: skip
+                    trailing = name[j:]
+                    # Only skip if trailing text is a known type suffix
+                    if trailing.lower() in ("unit", "constant", "variable"):
+                        return True
 
     return False
 
@@ -186,7 +188,8 @@ def _format_display_name(name: str, flags: set[str], item_type: str,
         if "s" in flags and "_" in name:
             import re
             subscripts = str.maketrans("0123456789", "\u2080\u2081\u2082\u2083\u2084\u2085\u2086\u2087\u2088\u2089")
-            result = re.sub(r'_(\d+)$', lambda m: m.group(1).translate(subscripts), name)
+            # Only convert single-digit patterns like _0, _1 (not _220)
+            result = re.sub(r'_(\d)$', lambda m: m.group(1).translate(subscripts), name)
             if result != name:
                 return result
         return name
@@ -219,15 +222,31 @@ def _format_display_name(name: str, flags: set[str], item_type: str,
         return name
 
     if item_type == "variable":
+        # For suffix-flagged items: UpperCamelCase with special cases
         if item_has_suffix:
-            # Suffix-flagged items: UpperCamelCase
-            # Exception: single-char suffix (like _u, _b) keep verbatim
             last_us = name.rfind("_")
-            if last_us >= 0 and len(name) - last_us - 1 <= 1:
-                return name
+            if last_us >= 0:
+                trailing = name[last_us + 1:]
+                if trailing.isalpha() and len(trailing) <= 1:
+                    return name  # Keep verbatim (e.g., deuteron_u)
+                if trailing.isdigit() and len(trailing) == 1:
+                    # Single trailing digit: convert to subscript,
+                    # keep the base name lowercase (e.g., pauli_0 → pauli₀)
+                    subscripts = str.maketrans(
+                        "0123456789",
+                        "\u2080\u2081\u2082\u2083\u2084"
+                        "\u2085\u2086\u2087\u2088\u2089")
+                    base = name[:last_us]
+                    return base + trailing.translate(subscripts)
             return "".join(w[0].upper() + w[1:] if w else "" for w in parts)
-        # Non-suffix items: keep verbatim
-        return name
+        # For non-suffix items:
+        if name != name.lower():
+            return name  # Mixed-case names (Hz_to_J): verbatim
+        # All-lowercase: UpperCamelCase only if every alphabetic part ≥ 2 chars
+        for p in parts:
+            if p.isalpha() and len(p) < 2:
+                return name  # Has single-letter alphabetic part → verbatim
+        return "".join(w[0].upper() + w[1:] if w else "" for w in parts)
 
     return name
 
